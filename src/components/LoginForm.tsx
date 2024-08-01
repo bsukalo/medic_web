@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +15,7 @@ const LoginForm = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 	const navigate = useNavigate();
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		axios
@@ -21,11 +23,13 @@ const LoginForm = () => {
 			.then((res) => {
 				console.log(res.data);
 				const token = res.data.accessToken;
+				localStorage.setItem("login", token);
 				console.log(token);
 				navigate("/home");
 			})
 			.catch((error) => {
-				console.log(error.message);
+				setErrorMessage(error.response.data.message);
+				console.log(errorMessage);
 			});
 	};
 
@@ -35,67 +39,87 @@ const LoginForm = () => {
 				className="d-flex flex-column justify-content-center align-items-center"
 				style={{ minHeight: "90vh" }}
 			>
-				<div className="mb-3 text-center">
-					<h1>
-						MedicLab
-						<br />
-						Login
-					</h1>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="username" className="visually-hidden">
-						Username
-					</label>
-					<input
-						{...register("username", {
-							required: true,
-							minLength: 3,
-						})}
-						id="username"
-						type="text"
-						autoComplete="username"
-						className="form-control"
-						placeholder="Username"
-					/>
-					{errors.username?.type === "required" && (
-						<p className="text-danger">Username is required</p>
-					)}
-					{errors.username?.type === "minLength" && (
-						<p
-							className="text-danger"
-							style={{ maxWidth: "200px", height: "24px" }}
-						>
-							Username must be at least 3 characters
-						</p>
-					)}
-				</div>
-				<div className="mb-3">
-					<label htmlFor="password" className="visually-hidden">
-						Password
-					</label>
-					<input
-						{...register("password", {
-							required: true,
-							minLength: 3,
-						})}
-						id="password"
-						type="password"
-						className="form-control"
-						placeholder="Password"
-					/>
-					{errors.password?.type === "required" && (
-						<p className="text-danger">Password is required</p>
-					)}
-					{errors.password?.type === "minLength" && (
+				<span
+					className="d-flex flex-column align-items-center rounded"
+					style={{
+						padding: "100px 50px 100px 50px",
+						backgroundColor: "rgb(14,17,21)",
+					}}
+				>
+					<div className="mb-3 text-center">
+						<h2>
+							MedicLab
+							<br />
+							Login
+						</h2>
+					</div>
+					{errorMessage === "" ? (
+						""
+					) : (
 						<p
 							className="text-danger"
 							style={{ maxWidth: "200px" }}
 						>
-							Password must be at least 3 characters
+							{errorMessage}
 						</p>
 					)}
-				</div>
-				<button className="btn btn-primary">Login</button>
+					<div className="mb-3">
+						<label htmlFor="username" className="visually-hidden">
+							Username
+						</label>
+						<input
+							{...register("username", {
+								required: true,
+								minLength: 3,
+							})}
+							id="username"
+							type="text"
+							autoComplete="username"
+							className="form-control"
+							placeholder="Username"
+							style={{ backgroundColor: "rgb(14,17,21)" }}
+						/>
+						{errors.username?.type === "required" && (
+							<p className="text-danger">Username is required</p>
+						)}
+						{errors.username?.type === "minLength" && (
+							<p
+								className="text-danger"
+								style={{ maxWidth: "200px", height: "24px" }}
+							>
+								Username must be at least 3 characters
+							</p>
+						)}
+					</div>
+					<div className="mb-3">
+						<label htmlFor="password" className="visually-hidden">
+							Password
+						</label>
+						<input
+							{...register("password", {
+								required: true,
+								minLength: 3,
+							})}
+							id="password"
+							type="password"
+							className="form-control"
+							placeholder="Password"
+							style={{ backgroundColor: "rgb(14,17,21)" }}
+						/>
+						{errors.password?.type === "required" && (
+							<p className="text-danger">Password is required</p>
+						)}
+						{errors.password?.type === "minLength" && (
+							<p
+								className="text-danger"
+								style={{ maxWidth: "200px" }}
+							>
+								Password must be at least 3 characters
+							</p>
+						)}
+					</div>
+					<button className="btn btn-primary">Login</button>
+				</span>
 			</div>
 		</form>
 	);
