@@ -1,17 +1,21 @@
 import axios from "axios";
-import { FormEvent, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface FormData {
+	username: string;
+	password: string;
+}
 
 const LoginForm = () => {
-	const [username, setUsername] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<FormData>();
 
-	const handleSubmit = (event: FormEvent) => {
-		event.preventDefault();
+	const onSubmit: SubmitHandler<FormData> = (data) => {
 		axios
-			.post("http://127.0.0.1:3000/api/login", {
-				username,
-				password,
-			})
+			.post("http://127.0.0.1:3000/api/login", { ...data })
 			.then((res) => {
 				console.log(res.data);
 			})
@@ -21,7 +25,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<div
 				className="d-flex flex-column justify-content-center align-items-center"
 				style={{ minHeight: "90vh" }}
@@ -38,25 +42,53 @@ const LoginForm = () => {
 						Username
 					</label>
 					<input
-						onChange={(event) => setUsername(event.target.value)}
+						{...register("username", {
+							required: true,
+							minLength: 3,
+						})}
 						id="username"
 						type="text"
 						autoComplete="username"
 						className="form-control"
 						placeholder="Username"
 					/>
+					{errors.username?.type === "required" && (
+						<p className="text-danger">Username is required</p>
+					)}
+					{errors.username?.type === "minLength" && (
+						<p
+							className="text-danger"
+							style={{ maxWidth: "200px", height: "24px" }}
+						>
+							Username must be at least 3 characters
+						</p>
+					)}
 				</div>
 				<div className="mb-3">
 					<label htmlFor="password" className="visually-hidden">
 						Password
 					</label>
 					<input
-						onChange={(event) => setPassword(event.target.value)}
+						{...register("password", {
+							required: true,
+							minLength: 3,
+						})}
 						id="password"
 						type="password"
 						className="form-control"
 						placeholder="Password"
 					/>
+					{errors.password?.type === "required" && (
+						<p className="text-danger">Password is required</p>
+					)}
+					{errors.password?.type === "minLength" && (
+						<p
+							className="text-danger"
+							style={{ maxWidth: "200px" }}
+						>
+							Password must be at least 3 characters
+						</p>
+					)}
 				</div>
 				<button className="btn btn-primary">Login</button>
 			</div>
