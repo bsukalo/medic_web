@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
 	username: string;
@@ -12,12 +13,16 @@ const LoginForm = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormData>();
+	const navigate = useNavigate();
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		axios
 			.post("http://127.0.0.1:3000/api/login", { ...data })
 			.then((res) => {
 				console.log(res.data);
+				const token = res.data.accessToken;
+				console.log(token);
+				navigate("/home");
 			})
 			.catch((error) => {
 				console.log(error.message);
