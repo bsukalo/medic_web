@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 const useAuth = () => {
 	let isExpired = false;
 	const token = localStorage.getItem("login_token");
-	const parsedToken = token !== null ? token : "a";
+	const parsedToken = token !== null ? token : "";
 
 	const decodedToken = jwtDecode<JwtPayload>(parsedToken);
 	console.log("Decoded Token", decodedToken);
