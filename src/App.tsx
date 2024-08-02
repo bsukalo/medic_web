@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "./components/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
