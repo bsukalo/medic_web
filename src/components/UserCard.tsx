@@ -7,7 +7,7 @@ const UserCard = () => {
 			style={{
 				backgroundColor: "rgb(14,17,21)",
 				width: "calc(100% - 50px)",
-				maxWidth: "1920px",
+				maxWidth: "1440px",
 			}}
 		>
 			<h5 className="card-header ">Name</h5>
