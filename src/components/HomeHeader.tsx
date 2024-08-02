@@ -35,8 +35,11 @@ const HomeHeader = () => {
 			}}
 		>
 			<h2 className="my-1">MedicLab Home</h2>
-			<div className="btn btn-outline-light" onClick={handleLogOut}>
-				Log out
+			<div className="d-flex justify-content-between gap-3">
+				<div className="btn btn-primary">New user</div>
+				<div className="btn btn-outline-light" onClick={handleLogOut}>
+					Log out
+				</div>
 			</div>
 		</div>
 	);
