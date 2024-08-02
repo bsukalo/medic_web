@@ -21,9 +21,8 @@ const LoginForm = () => {
 		axios
 			.post("http://127.0.0.1:3000/api/login", { ...data })
 			.then((res) => {
-				console.log(res.data);
 				const token = res.data.accessToken;
-				localStorage.setItem("login", token);
+				localStorage.setItem("login_token", token);
 				console.log(token);
 				navigate("/home");
 			})
