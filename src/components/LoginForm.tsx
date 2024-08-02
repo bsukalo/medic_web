@@ -111,7 +111,7 @@ const LoginForm = () => {
 						{errors.password?.type === "minLength" && (
 							<p
 								className="text-danger"
-								style={{ maxWidth: "200px" }}
+								style={{ maxWidth: "200px", maxHeight: "24px" }}
 							>
 								Password must be at least 3 characters
 							</p>
