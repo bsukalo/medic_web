@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../services/api-client";
 
 interface FormData {
 	username: string;
@@ -21,8 +21,8 @@ const LoginForm = () => {
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		setIsLoading(true);
 
-		axios
-			.post("https://medic-api-peach.vercel.app/api/login", { ...data })
+		apiClient
+			.post("/login", { ...data })
 			.then((res) => {
 				const token = res.data.accessToken;
 				localStorage.setItem("login_token", token);

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import apiClient from "../services/api-client";
 
 const HomeHeader = () => {
 	const navigate = useNavigate();
@@ -8,8 +8,8 @@ const HomeHeader = () => {
 	const handleLogOut = () => {
 		const token = localStorage.getItem("login_token");
 		console.log(token);
-		axios
-			.options("https://medic-api-peach.vercel.app/api/logout", {
+		apiClient
+			.options("/logout", {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
@@ -24,7 +24,7 @@ const HomeHeader = () => {
 
 	return (
 		<div
-			className="px-4 position-fixed d-flex flex-row justify-content-between align-items-center"
+			className="px-4 position-fixed d-flex flex-row justify-content-between align-items-center gap-3"
 			style={{
 				backgroundColor: "rgb(14,17,21)",
 				height: "100px",
