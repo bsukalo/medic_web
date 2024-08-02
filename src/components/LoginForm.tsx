@@ -16,19 +16,24 @@ const LoginForm = () => {
 	} = useForm<FormData>();
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
+		setIsLoading(true);
+
 		axios
-			.post("http://127.0.0.1:3000/api/login", { ...data })
+			.post("https://medic-api-peach.vercel.app/api/login", { ...data })
 			.then((res) => {
 				const token = res.data.accessToken;
 				localStorage.setItem("login_token", token);
 				console.log(token);
 				navigate("/home");
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				setErrorMessage(error.response.data.message);
-				console.log(errorMessage);
+				console.log(error.response.data.message);
+				setIsLoading(false);
 			});
 	};
 
@@ -117,7 +122,13 @@ const LoginForm = () => {
 							</p>
 						)}
 					</div>
-					<button className="btn btn-primary">Login</button>
+					<button
+						className="btn btn-primary mb-4"
+						disabled={isLoading}
+					>
+						Login
+					</button>
+					{isLoading && <div className="spinner-border"></div>}
 				</span>
 			</div>
 		</form>
