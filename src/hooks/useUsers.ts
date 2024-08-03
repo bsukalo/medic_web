@@ -6,6 +6,12 @@ interface User {
 	_id: string;
 	username: string;
 	name: string;
+	orders: string;
+	status: string;
+	imageURL: string;
+	dateOfBirth: string;
+	isAdmin: boolean;
+	isBlocked: boolean;
 }
 
 interface FetchUsersResponse {

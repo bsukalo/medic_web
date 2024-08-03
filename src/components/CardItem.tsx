@@ -1,6 +1,6 @@
 interface CardItemProps {
 	header: string;
-	body: string;
+	body: string | any;
 }
 
 const CardItem = ({ header, body }: CardItemProps) => {
