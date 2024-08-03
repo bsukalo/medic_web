@@ -6,12 +6,8 @@ const HomeHeader = () => {
 	const navigate = useNavigate();
 
 	const handleLogOut = () => {
-		const token = localStorage.getItem("login_token");
-		console.log(token);
 		apiClient
-			.options("/logout", {
-				headers: { Authorization: `Bearer ${token}` },
-			})
+			.options("/logout")
 			.then((res) => {
 				console.log(res);
 				navigate("/");
