@@ -1,6 +1,6 @@
 interface CardItemProps {
 	header: string;
-	body: string | any;
+	body: string | React.ReactNode;
 }
 
 const CardItem = ({ header, body }: CardItemProps) => {
