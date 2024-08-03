@@ -5,8 +5,13 @@ interface CardItemProps {
 
 const CardItem = ({ header, body }: CardItemProps) => {
 	return (
-		<div style={{ width: "220px" }}>
-			<p className="mb-2">{header}</p>
+		<div
+			style={{
+				width: "220px",
+				textAlign: "left",
+			}}
+		>
+			<p className="mb-2 border-bottom">{header}</p>
 			<h5>{body}</h5>
 		</div>
 	);

@@ -1,27 +1,19 @@
 import CardItem from "./CardItem";
 import useUsers from "../hooks/useUsers";
 import { useState } from "react";
+import { FaBars } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { MdBlock } from "react-icons/md";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import placeholderImg from "../assets/placeholder-image.webp";
 import UserCardSkeleton from "./UserCardSkeleton";
 import apiClient from "../services/api-client";
 import { toast } from "react-toastify";
+import Modal from "./Modal";
+import UserDetails from "./UserDetails";
 
 const UserCard = () => {
 	const { users, error } = useUsers();
-	const [detailedView, setDetailedView] = useState<{
-		[key: string]: boolean;
-	}>({});
+	const [showModal, setShowModal] = useState(false);
 	console.log(error);
-
-	const handleClick = (id: string) => {
-		setDetailedView((openCards) => ({
-			...openCards,
-			[id]: !openCards[id],
-		}));
-	};
 
 	const handleBlock = async (id: string) => {
 		try {
@@ -34,6 +26,17 @@ const UserCard = () => {
 
 	return (
 		<>
+			{
+				<Modal
+					show={showModal}
+					onClose={() => {
+						setShowModal(false);
+					}}
+					title={"User details"}
+				>
+					<UserDetails />
+				</Modal>
+			}
 			{error && (
 				<>
 					<UserCardSkeleton />
@@ -101,74 +104,25 @@ const UserCard = () => {
 								header="Last login date"
 								body={user.lastLogin.slice(0, 10)}
 							/>
-							{detailedView[user._id] && (
-								<>
-									<CardItem
-										header="Orders"
-										body={user.orders || "0"}
-									/>
-									<CardItem
-										header="Status"
-										body={user.status || "Not set"}
-									/>
-									<CardItem
-										header="Image"
-										body={
-											<img
-												src={
-													user.imageURL ||
-													placeholderImg
-												}
-												style={{
-													maxWidth: "50px",
-													height: "auto",
-												}}
-											></img>
-										}
-									/>
-									<CardItem
-										header="Date of birth"
-										body={
-											user.dateOfBirth
-												? user.dateOfBirth.slice(0, 10)
-												: "Not set"
-										}
-									/>
-									<CardItem
-										header="Role"
-										body={
-											user.isAdmin
-												? "Administrator"
-												: "Employee"
-										}
-									/>
-									<CardItem
-										header="Blocked"
-										body={user.isBlocked ? "Yes" : "No"}
-									/>
-								</>
-							)}
 						</div>
 					</div>
 					<div
-						className="d-flex card-footer justify-content-center align-items-center"
+						className="d-flex card-footer justify-content-end align-items-center"
 						style={{ backgroundColor: "rgb(14,17,21)" }}
 					>
 						<button
-							style={{ background: "none", border: "none" }}
-							onClick={() => handleClick(user._id)}
+							className="d-flex flex-row align-items-center justify-content-center gap-1"
+							style={{
+								background: "none",
+								border: "none",
+							}}
+							onClick={() => {
+								localStorage.setItem("selected_user_id", user._id)
+								setShowModal(true);
+							}}
 						>
-							{detailedView[user._id] ? (
-								<>
-									Show less
-									<IoIosArrowUp size={25} />
-								</>
-							) : (
-								<>
-									More details
-									<IoIosArrowDown size={25} />
-								</>
-							)}
+							<FaBars size={20} />
+							Show details
 						</button>
 					</div>
 				</div>

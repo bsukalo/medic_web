@@ -46,7 +46,11 @@ export default function Modal(props: ModalProps): ReturnType<FC> {
 						</h2>
 						<button
 							className="btn btn-outline-danger d-flex align-items-center justify-content-center"
-							style={{ height: "40px", width: "40px" }}
+							style={{
+								height: "40px",
+								width: "40px",
+								borderRadius: "0px 5px 0px 0px",
+							}}
 							onClick={props.onClose}
 						>
 							<RiCloseLargeFill size={20} />
