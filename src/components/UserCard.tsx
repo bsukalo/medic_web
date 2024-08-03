@@ -54,7 +54,7 @@ const UserCard = () => {
 											maxWidth: "45px",
 										}}
 									>
-										<FiEdit size={20} />
+										<FiEdit size={19} />
 									</button>
 
 									<button
@@ -76,7 +76,7 @@ const UserCard = () => {
 							<CardItem header="ID" body={user._id} />
 							<CardItem header="Username" body={user.username} />
 							<CardItem header="Name" body={user.name} />
-							<CardItem 
+							<CardItem
 								header="Last login date"
 								body={user.lastLogin.slice(0, 10)}
 							/>
