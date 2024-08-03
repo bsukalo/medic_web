@@ -1,6 +1,8 @@
 import CardItem from "./CardItem";
 import useUsers from "../hooks/useUsers";
 import { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdBlock } from "react-icons/md";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import placeholderImg from "../assets/placeholder-image.webp";
 import UserCardSkeleton from "./UserCardSkeleton";
@@ -39,13 +41,42 @@ const UserCard = () => {
 						justifyContent: "center",
 					}}
 				>
-					<h5 className="card-header ">{user.username}</h5>
+					<h5 className="card-header justify-content-between">
+						<div className="d-flex align-items-center justify-content-between">
+							{[
+								user.username,
+								<div className="d-flex gap-2">
+									<button
+										className="btn btn-primary d-flex align-items-center justify-content-center"
+										style={{
+											borderRadius: "5px",
+											height: "30px",
+											maxWidth: "45px",
+										}}
+									>
+										<FiEdit size={20} />
+									</button>
+
+									<button
+										className="btn btn-danger d-flex align-items-center justify-content-center"
+										style={{
+											borderRadius: "5px",
+											height: "30px",
+											maxWidth: "45px",
+										}}
+									>
+										<MdBlock size={20} />
+									</button>
+								</div>,
+							]}
+						</div>
+					</h5>
 					<div className="card-body mx-2">
 						<div className="d-flex flex-wrap justify-content-between gap-3">
 							<CardItem header="ID" body={user._id} />
 							<CardItem header="Username" body={user.username} />
 							<CardItem header="Name" body={user.name} />
-							<CardItem
+							<CardItem 
 								header="Last login date"
 								body={user.lastLogin.slice(0, 10)}
 							/>
