@@ -47,7 +47,7 @@ const UserCard = () => {
 							<CardItem header="Name" body={user.name} />
 							<CardItem
 								header="Last login date"
-								body={user.lastLogin}
+								body={user.lastLogin.slice(0, 10)}
 							/>
 							{detailedView[user._id] && (
 								<>
@@ -76,7 +76,11 @@ const UserCard = () => {
 									/>
 									<CardItem
 										header="Date of birth"
-										body={user.dateOfBirth || "Not set"}
+										body={
+											user.dateOfBirth
+												? user.dateOfBirth.slice(0, 10)
+												: "Not set"
+										}
 									/>
 									<CardItem
 										header="Role"
