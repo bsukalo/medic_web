@@ -7,9 +7,6 @@ const UserCardContainer = () => {
 			style={{ marginTop: "125px" }}
 		>
 			<UserCard />
-			<UserCard />
-			<UserCard />
-			<UserCard />
 		</div>
 	);
 };

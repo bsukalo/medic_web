@@ -5,9 +5,9 @@ interface CardItemProps {
 
 const CardItem = ({ header, body }: CardItemProps) => {
 	return (
-		<div>
+		<div style={{ width: "220px" }}>
 			<p className="mb-2">{header}</p>
-			<h4>{body}</h4>
+			<h5>{body}</h5>
 		</div>
 	);
 };
