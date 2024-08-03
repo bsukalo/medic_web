@@ -6,6 +6,8 @@ import { MdBlock } from "react-icons/md";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import placeholderImg from "../assets/placeholder-image.webp";
 import UserCardSkeleton from "./UserCardSkeleton";
+import apiClient from "../services/api-client";
+import { toast } from "react-toastify";
 
 const UserCard = () => {
 	const { users, error } = useUsers();
@@ -19,6 +21,15 @@ const UserCard = () => {
 			...openCards,
 			[id]: !openCards[id],
 		}));
+	};
+
+	const handleBlock = async (id: string) => {
+		try {
+			await apiClient.post(`/users/block/${id}`);
+			toast.warn("User blocked");
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -42,16 +53,19 @@ const UserCard = () => {
 					}}
 				>
 					<h5 className="card-header justify-content-between">
-						<div className="d-flex align-items-center justify-content-between">
+						<div
+							className="d-flex align-items-center justify-content-between gap-3"
+							style={{ wordBreak: "break-word" }}
+						>
 							{[
 								user.username,
-								<div className="d-flex gap-2">
+								<div className="d-flex gap-2 align-items-center justify-content-center">
 									<button
 										className="btn btn-primary d-flex align-items-center justify-content-center"
 										style={{
 											borderRadius: "5px",
 											height: "30px",
-											maxWidth: "45px",
+											width: "45px",
 										}}
 									>
 										<FiEdit size={19} />
@@ -62,7 +76,14 @@ const UserCard = () => {
 										style={{
 											borderRadius: "5px",
 											height: "30px",
-											maxWidth: "45px",
+											width: "45px",
+										}}
+										onClick={() => {
+											if (user.isBlocked) {
+												toast.error(
+													"User already blocked!"
+												);
+											} else handleBlock(user._id);
 										}}
 									>
 										<MdBlock size={20} />
