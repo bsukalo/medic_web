@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../services/api-client";
+import MiniModal from "./MiniModal";
 
 interface FormData {
 	username: string;
@@ -17,6 +18,12 @@ const LoginForm = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+
+	const handleModalClose = () => {
+		setErrorMessage("");
+		setShowModal(false);
+	};
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		setIsLoading(true);
@@ -34,11 +41,20 @@ const LoginForm = () => {
 				setErrorMessage(error.response.data.message);
 				console.log(error.response.data.message);
 				setIsLoading(false);
+				setShowModal(true);
 			});
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form>
+			<MiniModal
+				show={showModal}
+				onClose={() => {
+					handleModalClose();
+				}}
+			>
+				{<>{errorMessage}</>}
+			</MiniModal>
 			<div
 				className="d-flex flex-column justify-content-center align-items-center"
 				style={{ minHeight: "90vh" }}
@@ -57,16 +73,6 @@ const LoginForm = () => {
 							Login
 						</h2>
 					</div>
-					{errorMessage === "" ? (
-						""
-					) : (
-						<p
-							className="text-danger"
-							style={{ maxWidth: "200px" }}
-						>
-							{errorMessage}
-						</p>
-					)}
 					<div className="mb-3">
 						<label htmlFor="username" className="visually-hidden">
 							Username
@@ -124,6 +130,7 @@ const LoginForm = () => {
 					</div>
 					<button
 						className="btn btn-primary mb-4"
+						onClick={handleSubmit(onSubmit)}
 						disabled={isLoading}
 					>
 						Login
