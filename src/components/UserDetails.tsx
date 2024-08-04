@@ -8,10 +8,11 @@ import apiClient from "../services/api-client";
 
 const UserDetails = () => {
 	const { details, error } = useDetails();
+	const currentUser = localStorage.getItem("current_user");
 	console.log(details, error);
 
 	const handleBlock = async (id: string) => {
-		if (localStorage.getItem("current_user") === id) {
+		if (currentUser === id) {
 			toast.error("Active user cannot be blocked!");
 		} else if (details?.isBlocked) {
 			toast.error("User already blocked");
@@ -52,7 +53,7 @@ const UserDetails = () => {
 				</button>
 			</div>
 
-			<div className="px-4 pb-5 d-flex flex-row flex-wrap  justify-content-between gap-5">
+			<div className="px-4 pb-5 d-flex flex-row flex-wrap  justify-content-left gap-5">
 				<CardItem header="ID" body={details?.id}></CardItem>
 				<CardItem header="Name" body={details?.name}></CardItem>
 				<CardItem header="Username" body={details?.username}></CardItem>
