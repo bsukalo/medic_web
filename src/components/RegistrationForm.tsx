@@ -31,7 +31,7 @@ const RegistrationForm = () => {
 			.post("/register", { ...data })
 			.then((res) => {
 				console.log("registered", res);
-				toast.success("User successfuly registered"); 
+				toast.success("User successfuly registered");
 				reset();
 			})
 			.catch((error) => {
@@ -42,20 +42,34 @@ const RegistrationForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			{errorMessage && <p className="text-danger">{errorMessage}</p>}
+			{errorMessage && <p className="text-danger px-4">{errorMessage}</p>}
 			<div className="px-4 pb-5 d-flex flex-row flex-wrap justify-content-left gap-5">
 				<CardItem
 					header="Username"
 					body={
 						<>
 							<input
-								{...register("username", { required: true })}
+								{...register("username", {
+									required: true,
+									minLength: 3,
+									maxLength: 20,
+								})}
 								className="form-control"
 								placeholder="Username"
 							/>
 							{errors.username?.type === "required" && (
 								<p className="text-danger fs-6">
 									Username is required
+								</p>
+							)}
+							{errors.username?.type === "minLength" && (
+								<p className="text-danger fs-6">
+									Username must be between 3-20 characters
+								</p>
+							)}
+							{errors.username?.type === "maxLength" && (
+								<p className="text-danger fs-6">
+									Username must be between 3-20 characters
 								</p>
 							)}
 						</>
@@ -66,7 +80,11 @@ const RegistrationForm = () => {
 					body={
 						<>
 							<input
-								{...register("password", { required: true })}
+								{...register("password", {
+									required: true,
+									minLength: 3,
+									maxLength: 20,
+								})}
 								type="password"
 								className="form-control"
 								placeholder="Password"
@@ -74,6 +92,16 @@ const RegistrationForm = () => {
 							{errors.password?.type === "required" && (
 								<p className="text-danger fs-6">
 									Password is required
+								</p>
+							)}
+							{errors.password?.type === "minLength" && (
+								<p className="text-danger fs-6">
+									Password must be between 3-20 characters
+								</p>
+							)}
+							{errors.password?.type === "maxLength" && (
+								<p className="text-danger fs-6">
+									Password must be between 3-20 characters
 								</p>
 							)}
 						</>
@@ -112,7 +140,7 @@ const RegistrationForm = () => {
 							/>
 							{errors.orders?.type === "min" && (
 								<p className="text-danger fs-6">
-									Orders must be between 0-10!
+									Orders must be between 0-10
 								</p>
 							)}
 							{errors.orders?.type === "max" && (
