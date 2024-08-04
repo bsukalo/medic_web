@@ -7,7 +7,7 @@ const CardItem = ({ header, body }: CardItemProps) => {
 	return (
 		<div
 			style={{
-				width: "220px",
+				width: "200px",
 				textAlign: "left",
 			}}
 		>

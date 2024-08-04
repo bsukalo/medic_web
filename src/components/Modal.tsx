@@ -4,7 +4,7 @@ import { RiCloseLargeFill } from "react-icons/ri";
 interface ModalProps {
 	show: boolean;
 	onClose: () => void;
-	title: string;
+	title: string | Element[];
 	children: ReactElement;
 }
 
@@ -29,7 +29,9 @@ export default function Modal(props: ModalProps): ReturnType<FC> {
 						bottom: 100,
 						width: "80%",
 						height: "auto",
+						marginBlockStart: "20px",
 						marginBlockEnd: "100px",
+						maxWidth: "1400px",
 					}}
 				>
 					<div
@@ -42,7 +44,7 @@ export default function Modal(props: ModalProps): ReturnType<FC> {
 								maxWidth: "300px",
 							}}
 						>
-							{props.title}
+							{<>{props.title}</>}
 						</h2>
 						<button
 							className="btn btn-outline-danger d-flex align-items-center justify-content-center"

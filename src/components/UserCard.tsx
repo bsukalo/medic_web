@@ -2,11 +2,7 @@ import CardItem from "./CardItem";
 import useUsers from "../hooks/useUsers";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { FiEdit } from "react-icons/fi";
-import { MdBlock } from "react-icons/md";
 import UserCardSkeleton from "./UserCardSkeleton";
-import apiClient from "../services/api-client";
-import { toast } from "react-toastify";
 import Modal from "./Modal";
 import UserDetails from "./UserDetails";
 
@@ -15,14 +11,14 @@ const UserCard = () => {
 	const [showModal, setShowModal] = useState(false);
 	console.log(error);
 
-	const handleBlock = async (id: string) => {
+	/* const handleBlock = async (id: string) => {
 		try {
 			await apiClient.post(`/users/block/${id}`);
 			toast.warn("User blocked");
 		} catch (error) {
 			console.error(error);
 		}
-	};
+	}; */
 
 	return (
 		<>
@@ -60,39 +56,7 @@ const UserCard = () => {
 							className="d-flex align-items-center justify-content-between gap-3"
 							style={{ wordBreak: "break-word" }}
 						>
-							{[
-								user.username,
-								<div className="d-flex gap-2 align-items-center justify-content-center">
-									<button
-										className="btn btn-primary d-flex align-items-center justify-content-center"
-										style={{
-											borderRadius: "5px",
-											height: "30px",
-											width: "45px",
-										}}
-									>
-										<FiEdit size={19} />
-									</button>
-
-									<button
-										className="btn btn-danger d-flex align-items-center justify-content-center"
-										style={{
-											borderRadius: "5px",
-											height: "30px",
-											width: "45px",
-										}}
-										onClick={() => {
-											if (user.isBlocked) {
-												toast.error(
-													"User already blocked!"
-												);
-											} else handleBlock(user._id);
-										}}
-									>
-										<MdBlock size={20} />
-									</button>
-								</div>,
-							]}
+							{[user.username]}
 						</div>
 					</h5>
 					<div className="card-body mx-2">
@@ -117,7 +81,10 @@ const UserCard = () => {
 								border: "none",
 							}}
 							onClick={() => {
-								localStorage.setItem("selected_user_id", user._id)
+								localStorage.setItem(
+									"selected_user_id",
+									user._id
+								);
 								setShowModal(true);
 							}}
 						>
