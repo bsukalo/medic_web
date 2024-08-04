@@ -33,7 +33,7 @@ const LoginForm = () => {
 			.then((res) => {
 				const token = res.data.accessToken;
 				localStorage.setItem("login_token", token);
-				console.log(token);
+				localStorage.setItem("current_user", res.data._id);
 				navigate("/home");
 				setIsLoading(false);
 			})

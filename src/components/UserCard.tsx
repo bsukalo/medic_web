@@ -11,15 +11,6 @@ const UserCard = () => {
 	const [showModal, setShowModal] = useState(false);
 	console.log(error);
 
-	/* const handleBlock = async (id: string) => {
-		try {
-			await apiClient.post(`/users/block/${id}`);
-			toast.warn("User blocked");
-		} catch (error) {
-			console.error(error);
-		}
-	}; */
-
 	return (
 		<>
 			{

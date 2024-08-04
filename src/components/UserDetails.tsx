@@ -4,12 +4,26 @@ import placeholderImg from "../assets/placeholder-image.webp";
 import { FiEdit } from "react-icons/fi";
 import { MdBlock } from "react-icons/md";
 import { toast } from "react-toastify";
+import apiClient from "../services/api-client";
 
 const UserDetails = () => {
 	const { details, error } = useDetails();
 	console.log(details, error);
 
-	const handleBlock = () => {};
+	const handleBlock = async (id: string) => {
+		if (localStorage.getItem("current_user") === id) {
+			toast.error("Active user cannot be blocked!");
+		} else if (details?.isBlocked) {
+			toast.error("User already blocked");
+		} else {
+			try {
+				await apiClient.post(`/users/block/${id}`);
+				toast.warn("User blocked");
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	};
 
 	return (
 		<div>
@@ -32,11 +46,7 @@ const UserDetails = () => {
 						height: "auto",
 						width: "130px",
 					}}
-					onClick={() => {
-						if (details?.isBlocked) {
-							toast.error("User already blocked!");
-						} else handleBlock();
-					}}
+					onClick={() => handleBlock(details!.id)}
 				>
 					<MdBlock size={20} /> Block user
 				</button>
