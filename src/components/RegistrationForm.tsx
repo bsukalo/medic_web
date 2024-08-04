@@ -31,7 +31,7 @@ const RegistrationForm = () => {
 			.post("/register", { ...data })
 			.then((res) => {
 				console.log("registered", res);
-				toast.success("User successfuly registered");
+				toast.success("User successfuly registered"); 
 				reset();
 			})
 			.catch((error) => {
