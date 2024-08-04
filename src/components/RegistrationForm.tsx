@@ -22,6 +22,7 @@ const RegistrationForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<FormData>();
 	const [errorMessage, setErrorMessage] = useState();
 
@@ -31,6 +32,7 @@ const RegistrationForm = () => {
 			.then((res) => {
 				console.log("registered", res);
 				toast.success("User successfuly registered");
+				reset();
 			})
 			.catch((error) => {
 				console.log(error.response.data.message);
