@@ -15,8 +15,6 @@ interface FormData {
 	status: string;
 	imageURL: string;
 	dateOfBirth: Date;
-	isAdmin: string;
-	isBlocked: string;
 }
 
 interface Props {
@@ -38,8 +36,6 @@ const EditUserDetails = ({ onCancelEdit }: Props) => {
 			status: "",
 			imageURL: "",
 			dateOfBirth: undefined,
-			isAdmin: "false",
-			isBlocked: "false",
 		},
 	});
 	const [errorMessage, setErrorMessage] = useState<string>("");
@@ -56,8 +52,6 @@ const EditUserDetails = ({ onCancelEdit }: Props) => {
 				dateOfBirth: details.dateOfBirth
 					? new Date(details.dateOfBirth)
 					: undefined,
-				isAdmin: details.isAdmin ? "true" : "false",
-				isBlocked: details.isBlocked ? "true" : "false",
 			});
 		}
 	}, [details, reset]);
@@ -205,34 +199,6 @@ const EditUserDetails = ({ onCancelEdit }: Props) => {
 								/>
 							)}
 						/>
-					}
-				/>
-				<CardItem
-					header="Role"
-					body={
-						<>
-							<select
-								{...register("isAdmin")}
-								className="form-control"
-							>
-								<option value="true">Administrator</option>
-								<option value="false">Employee</option>
-							</select>
-						</>
-					}
-				/>
-				<CardItem
-					header="Blocked"
-					body={
-						<>
-							<select
-								{...register("isBlocked")}
-								className="form-control"
-							>
-								<option value="true">Blocked</option>
-								<option value="false">Active</option>
-							</select>
-						</>
 					}
 				/>
 			</div>
