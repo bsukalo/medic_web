@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-	baseURL: "http://127.0.0.1:3000/api",
+	baseURL: "https://medic-api-indol.vercel.app/api",
 	withCredentials: true,
 	headers: {
 		"Content-Type": "application/json",
